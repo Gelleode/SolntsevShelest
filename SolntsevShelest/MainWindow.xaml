@@ -1,0 +1,61 @@
+﻿<Window x:Class="SolntsevShelest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SolntsevShelest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="30">
+                <TextBox  Width="250" x:Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"/>
+                <ComboBox Name="ComboFilter" SelectionChanged="ComboFilter_SelectionChanged"  DisplayMemberPath="Title" MinWidth="150"/>
+                <ComboBox x:Name="ComboSort" SelectionChanged="ComboSort_SelectionChanged" MinWidth="150"/>
+        </StackPanel>
+        <ListView Name="LViewAgent" Grid.Row="1">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="650">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="100" Stretch="UniformToFill">
+                            <Image.Source>
+                                <Binding Path="Logo">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>\agents\picture.png</ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding AgentType.Title}"/>
+                                <TextBlock Text=" | "/>
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
+                            <TextBlock/>
+                            <TextBlock Text="{Binding Phone}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Приоритетность: "/>
+                                <TextBlock Text="{Binding Priority}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
