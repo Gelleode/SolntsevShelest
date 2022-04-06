@@ -17,7 +17,7 @@
                 <ComboBox Name="ComboFilter" SelectionChanged="ComboFilter_SelectionChanged"  DisplayMemberPath="Title" MinWidth="150"/>
                 <ComboBox x:Name="ComboSort" SelectionChanged="ComboSort_SelectionChanged" MinWidth="150"/>
         </StackPanel>
-        <ListView Name="LViewAgent" Grid.Row="1">
+        <ListView Name="LViewAgent" Grid.Row="1" MouseDoubleClick="LViewAgent_MouseDoubleClick">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel/>
@@ -29,7 +29,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
                         <Image Width="100" Stretch="UniformToFill">
                             <Image.Source>
@@ -46,16 +46,21 @@
                                 <TextBlock Text=" | "/>
                                 <TextBlock Text="{Binding Title}"/>
                             </StackPanel>
-                            <TextBlock/>
+                            <TextBlock Text="{Binding ProductCount}"/>
                             <TextBlock Text="{Binding Phone}"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Приоритетность: "/>
                                 <TextBlock Text="{Binding Priority}"/>
                             </StackPanel>
                         </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Discount}" FontSize="30"/>
+                            <TextBlock Text="%" FontSize="30"/>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Frame NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered"  Grid.Row="1" Name="MainFrame"/>
     </Grid>
 </Window>

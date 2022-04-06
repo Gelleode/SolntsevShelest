@@ -37,36 +37,43 @@ namespace SolntsevShelest
             ComboSort.ItemsSource = allFilters;
             ComboSort.SelectedIndex = 0;
             UpdateAgents();
+            Manager.MainFrame = MainFrame;
         }
 
         private void UpdateAgents()
         {
             List<Agent> agents = new List<Agent>(DatabaseContext.db.Agent);
-            List<Discount> discounts = new List<Discount>(DatabaseContext.db.Agent.Select(s => new Discount { agentId = s.ID, 
+            List<Discount> discounts = new List<Discount>(DatabaseContext.db.Agent.Select(s => new Discount { agentId = s.ID,
                 totalMoney = (from ps in s.ProductSale.Where(w => w.AgentID.Equals(s.ID))
                               join p in DatabaseContext.db.Product on ps.ProductID equals p.ID
-                              select new { p.ID, p.MinCostForAgent, ps.ProductCount }), 
-                productAmount = s.ProductSale.Where(w=>w.AgentID.Equals(s.ID)).Select(p=>p.ProductCount).DefaultIfEmpty().Sum() }));
+                              select new { p.ID, money = p.MinCostForAgent * ps.ProductCount }).Select(p=>p.money).DefaultIfEmpty().Sum(),
+                productAmount = s.ProductSale.Where(w => w.AgentID.Equals(s.ID)).Select(p => p.ProductCount).DefaultIfEmpty().Sum() }));
+            var curAgents = from a in agents
+                            join d in discounts on a.ID equals d.agentId
+                            select new { ID = a.ID, Logo = a.Logo, Title = a.Title, ProductCount = d.productAmount, Phone = a.Phone, Priority = a.Priority, Discount = d.discount, AgentTypeID = a.AgentTypeID, AgentType = a.AgentType};
 
             if (ComboFilter.SelectedIndex > 0)
-                agents = agents.Where(p => p.AgentTypeID.Equals(ComboFilter.SelectedIndex)).ToList();
+                curAgents = curAgents.Where(p => p.AgentTypeID.Equals(ComboFilter.SelectedIndex)).ToList();
             if (ComboSort.SelectedIndex == 0)
-                agents = agents.OrderBy(p => p.Title).ToList();
+                curAgents = curAgents.OrderBy(p => p.Title).ToList();
             if (ComboSort.SelectedIndex == 1)
-                agents = agents.OrderByDescending(p => p.Title).ToList();
+                curAgents = curAgents.OrderByDescending(p => p.Title).ToList();
             if (ComboSort.SelectedIndex == 2)
-                agents = agents;
+                curAgents = curAgents.OrderBy(p => p.Discount).ToList();
             if (ComboSort.SelectedIndex == 3)
-                agents = agents;
+                curAgents = curAgents.OrderByDescending(p => p.Discount).ToList();
             if (ComboSort.SelectedIndex == 4)
-                agents = agents.OrderBy(p => p.Priority).ToList();
+                curAgents = curAgents.OrderBy(p => p.Priority).ToList();
             if (ComboSort.SelectedIndex == 5)
-                agents = agents.OrderByDescending(p => p.Priority).ToList();
-            LViewAgent.ItemsSource = agents.Where(p=>p.Title.ToLower().Contains(TBoxSearch.Text.ToLower()));
+                curAgents = curAgents.OrderByDescending(p => p.Priority).ToList();
+            LViewAgent.ItemsSource = curAgents.Where(p=>p.Title.ToLower().Contains(TBoxSearch.Text.ToLower()));
         }
 
         private void ComboSort_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateAgents();
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateAgents();
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e) => UpdateAgents();
+        private void LViewAgent_MouseDoubleClick(object sender, MouseButtonEventArgs e) => Manager.MainFrame.Navigate(new AddEditPage(Convert.ToInt32(LViewAgent.SelectedItem.ToString().Split(' ')[3].Remove(LViewAgent.SelectedItem.ToString().Split(' ')[3].Length - 1))));
+
+        private void MainFrame_ContentRendered(object sender, EventArgs e) { }
     }
 }
