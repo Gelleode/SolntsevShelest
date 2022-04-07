@@ -5,19 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolntsevShelest"
         mc:Ignorable="d"
-        Title="Изменение приоритета выбранных агентов" Height="250" Width="320">
+        Title="Изменение приоритета выбранных агентов" Height="250" Width="425">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="46*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBlock Text="На сколько изменить приоритет :  "/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Height="17" Width="301">
+            <TextBlock Margin="10,0,0,0" Text="На сколько изменить приоритет :  "/>
             <TextBox Name="TBoxPrior" Text="" MinWidth="100"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Button Content="Изменить" Name="BtnChange" Click="BtnChange_Click" Margin="50"/>
-            <Button Content="Отменить" Name="BtnCancel" Click="BtnCancel_Click"  Margin="50"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="80" Width="305">
+            <Button Content="Изменить" Name="BtnChange" Click="BtnChange_Click" Margin="120,10,10,50"/>
+            <Button Content="Отменить" Name="BtnCancel" Click="BtnCancel_Click" Margin="50,10,10,50"/>
         </StackPanel>
     </Grid>
 </Window>

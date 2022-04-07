@@ -85,7 +85,8 @@ namespace SolntsevShelest
             AddEditWindow addEditWindow = new AddEditWindow((LViewAgent.SelectedItem as AgentWithDiscount).Agent);
             addEditWindow.ShowDialog();
         }
-        private void MainFrame_ContentRendered(object sender, EventArgs e) { }
+        private void MainFrame_ContentRendered(object sender, EventArgs e) => UpdateAgents();
+        public void UpdateAfterClose() => UpdateAgents();
         private void LViewAgent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LViewAgent.SelectedItems.Count > 1)
@@ -96,7 +97,8 @@ namespace SolntsevShelest
         private void BtnChangePriority_Click(object sender, RoutedEventArgs e)
         {
             EditPriorityWindow editPriorityWindow = new EditPriorityWindow(LViewAgent.SelectedItems.Cast<AgentWithDiscount>().Select(s => s.Agent).ToList());
-            editPriorityWindow.ShowDialog();
+            if (editPriorityWindow.ShowDialog() == true)
+                UpdateAgents();
         }
     }
 }

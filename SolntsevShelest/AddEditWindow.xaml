@@ -5,16 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolntsevShelest"
         mc:Ignorable="d"
-        Title="AddEditWindow" Height="450" Width="800">
+        Title="AddEditWindow" Height="500" Width="800">
     <Grid>
-        <StackPanel>
-            <TextBox Text = "{Binding Title}"/>
-            <TextBox Text = "{Binding Priority}"/>
-            <TextBox Text = "{Binding INN}"/>
-            <TextBox Text = "{Binding KPP}"/>
-            <TextBox Text = "{Binding DirectorName}"/>
-            <TextBox Text = "{Binding Phone}"/>
-            <TextBox Text = "{Binding Email}"/>
-        </StackPanel>
-    </Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Имя: " Grid.ColumnSpan="2" Margin="8,79,192,-79"/>
+        <TextBlock Text="Приоритет: " Margin="8,97,-8,-97"/>
+        <TextBlock Text="ИНН: " Margin="8,118,-8,-118"/>
+        <TextBlock Text="КПП: " Margin="8,140,-8,-140"/>
+        <TextBlock Text="Имя директора: " Margin="8,161,-8,-161"/>
+        <TextBlock Text="Телефон: " Margin="8,181,-8,-181"/>
+        <TextBlock Text="Email: " Margin="8,204,-8,-204"/>
+        <TextBox Name ="TBoxTitle" Text = "{Binding Title}" Margin="49,76,601,392" Height="16" MaxHeight="20"/>
+        <TextBox Name ="TBoxPriority" Text = "" Margin="80,97,579,371" MaxHeight="20"/>
+        <TextBox Name ="TBoxINN" Text = "{Binding INN}" Margin="46,118,649,349" MaxHeight="20"/>
+        <TextBox Text = "{Binding KPP}" Margin="46,140,643,328" MaxHeight="20"/>
+        <TextBox Text = "{Binding DirectorName}" Margin="105,161,566,306" MaxHeight="20"/>
+        <TextBox Text = "{Binding Phone}" Margin="64,183,607,285" MaxHeight="20"/>
+        <TextBox Text = "{Binding Email}" Margin="49,204,622,263" MaxHeight="20"/>
+    </Grid>
 </Window>

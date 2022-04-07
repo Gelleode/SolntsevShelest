@@ -24,8 +24,10 @@ namespace SolntsevShelest
         {
             if (agent != null)
                 _currentAgent = agent;
-            DataContext = _currentAgent;
             InitializeComponent();
+            DataContext = _currentAgent;
+            TBoxINN.Text = _currentAgent.INN;
+            TBoxPriority.Text = _currentAgent.Priority.ToString();
         }
     }
 }
