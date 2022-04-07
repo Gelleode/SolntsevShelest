@@ -17,7 +17,7 @@
                 <ComboBox Name="ComboFilter" SelectionChanged="ComboFilter_SelectionChanged"  DisplayMemberPath="Title" MinWidth="150"/>
                 <ComboBox x:Name="ComboSort" SelectionChanged="ComboSort_SelectionChanged" MinWidth="150"/>
         </StackPanel>
-        <ListView Name="LViewAgent" Grid.Row="1" MouseDoubleClick="LViewAgent_MouseDoubleClick">
+        <ListView Name="LViewAgent" Grid.Row="1" MouseDoubleClick="LViewAgent_MouseDoubleClick" SelectionChanged="LViewAgent_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel/>
@@ -64,6 +64,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Grid.Row="2" Name="BtnChangePriority" Content="Изменить приоритет на ..." Click="BtnChangePriority_Click"/>
         <Frame NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered"  Grid.Row="1" Name="MainFrame"/>
     </Grid>
 </Window>

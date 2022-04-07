@@ -24,6 +24,7 @@ namespace SolntsevShelest
         public MainWindow()
         {
             InitializeComponent();
+            BtnChangePriority.Visibility = Visibility.Hidden;
             var allTypes = DatabaseContext.db.AgentType.ToList();
 
             allTypes.Insert(0, new AgentType
@@ -42,9 +43,11 @@ namespace SolntsevShelest
 
         private void UpdateAgents()
         {
+            var curDate = DateTime.Now.Date.AddDays(-365);
+            var me = DatabaseContext.db.Agent.ToList();
             List<AgentWithDiscount> curAgents = new List<AgentWithDiscount>(DatabaseContext.db.Agent.Select(s => new AgentWithDiscount { Agent = s,
-                TotalMoney = s.ProductSale.Where(w => w.AgentID.Equals(s.ID)).Join(DatabaseContext.db.Product, ps => ps.ProductID, p => p.ID, (ps, p) => new { p.ID, money = p.MinCostForAgent * ps.ProductCount }).Select(p => p.money).DefaultIfEmpty().Sum(),
-                ProductCount = s.ProductSale.Where(w => w.AgentID.Equals(s.ID)).Select(p => p.ProductCount).DefaultIfEmpty().Sum()}));
+                TotalMoney = s.ProductSale.Where(w => w.AgentID.Equals(s.ID) && w.SaleDate >= curDate).Join(DatabaseContext.db.Product, ps => ps.ProductID, p => p.ID, (ps, p) => new { money = p.MinCostForAgent * ps.ProductCount }).Select(p => p.money).DefaultIfEmpty().Sum(),
+                ProductCount = s.ProductSale.Where(w => w.AgentID.Equals(s.ID) && w.SaleDate >= curDate).Select(p => p.ProductCount).DefaultIfEmpty().Sum()}));
 
             if (ComboFilter.SelectedIndex > 0)
                 curAgents = curAgents.Where(p => p.Agent.AgentTypeID.Equals(ComboFilter.SelectedIndex)).ToList();
@@ -69,8 +72,8 @@ namespace SolntsevShelest
                     curAgents = curAgents.OrderByDescending(p => p.Agent.Priority).ToList();
                     break;
             }
-            if (TBoxSearch.Text != null || TBoxSearch.Text != "")
-                curAgents.Where(p => p.Agent.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+            if (TBoxSearch.Text != null)
+                curAgents = curAgents.Where(p => p.Agent.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
             LViewAgent.ItemsSource = curAgents;
         }
 
@@ -83,5 +86,17 @@ namespace SolntsevShelest
             addEditWindow.ShowDialog();
         }
         private void MainFrame_ContentRendered(object sender, EventArgs e) { }
+        private void LViewAgent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LViewAgent.SelectedItems.Count > 1)
+                BtnChangePriority.Visibility = Visibility.Visible;
+            else
+                BtnChangePriority.Visibility = Visibility.Hidden;
+        }
+        private void BtnChangePriority_Click(object sender, RoutedEventArgs e)
+        {
+            EditPriorityWindow editPriorityWindow = new EditPriorityWindow(LViewAgent.SelectedItems.Cast<AgentWithDiscount>().Select(s => s.Agent).ToList());
+            editPriorityWindow.ShowDialog();
+        }
     }
 }
