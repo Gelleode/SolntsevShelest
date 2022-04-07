@@ -1,0 +1,20 @@
+﻿<Window x:Class="SolntsevShelest.AddEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SolntsevShelest"
+        mc:Ignorable="d"
+        Title="AddEditWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <TextBox Text = "{Binding Title}"/>
+            <TextBox Text = "{Binding Priority}"/>
+            <TextBox Text = "{Binding INN}"/>
+            <TextBox Text = "{Binding KPP}"/>
+            <TextBox Text = "{Binding DirectorName}"/>
+            <TextBox Text = "{Binding Phone}"/>
+            <TextBox Text = "{Binding Email}"/>
+        </StackPanel>
+    </Grid >
+</Window>

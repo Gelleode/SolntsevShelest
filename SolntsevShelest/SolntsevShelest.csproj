@@ -64,8 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddEditPage.xaml.cs">
-      <DependentUpon>AddEditPage.xaml</DependentUpon>
+    <Compile Include="AddEditWindow.xaml.cs">
+      <DependentUpon>AddEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Agent.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
@@ -82,6 +82,9 @@
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Discount.cs" />
+    <Compile Include="EditPriorityWindow.xaml.cs">
+      <DependentUpon>EditPriorityWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Manager.cs" />
     <Compile Include="Material.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
@@ -117,7 +120,11 @@
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DatabaseContext.cs" />
-    <Page Include="AddEditPage.xaml">
+    <Page Include="AddEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditPriorityWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
