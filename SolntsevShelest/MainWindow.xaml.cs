@@ -42,49 +42,46 @@ namespace SolntsevShelest
 
         private void UpdateAgents()
         {
-            List<AgentWithDiscount> curAgents = new List<AgentWithDiscount>(DatabaseContext.db.Agent.Select(s => new AgentWithDiscount
-            {
-                ID = s.ID,
-                Title = s.Title,
-                AgentTypeID = s.AgentTypeID,
-                Address = s.Address,
-                INN = s.INN,
-                KPP = s.KPP,
-                DirectorName = s.DirectorName,
-                Phone = s.Phone,
-                Email = s.Email,
-                Logo = s.Logo,
-                Priority = s.Priority,
-                AgentType = s.AgentType,
-                AgentPriorityHistory = s.AgentPriorityHistory,
-                ProductSale = s.ProductSale,
-                Shop = s.Shop,
-                TotalMoney = (from ps in s.ProductSale.Where(w => w.AgentID.Equals(s.ID))
-                              join p in DatabaseContext.db.Product on ps.ProductID equals p.ID
-                              select new { p.ID, money = p.MinCostForAgent * ps.ProductCount }).Select(p => p.money).DefaultIfEmpty().Sum(),
-                ProductCount = s.ProductSale.Where(w => w.AgentID.Equals(s.ID)).Select(p => p.ProductCount).DefaultIfEmpty().Sum()
-            }));
+            List<AgentWithDiscount> curAgents = new List<AgentWithDiscount>(DatabaseContext.db.Agent.Select(s => new AgentWithDiscount { Agent = s,
+                TotalMoney = s.ProductSale.Where(w => w.AgentID.Equals(s.ID)).Join(DatabaseContext.db.Product, ps => ps.ProductID, p => p.ID, (ps, p) => new { p.ID, money = p.MinCostForAgent * ps.ProductCount }).Select(p => p.money).DefaultIfEmpty().Sum(),
+                ProductCount = s.ProductSale.Where(w => w.AgentID.Equals(s.ID)).Select(p => p.ProductCount).DefaultIfEmpty().Sum()}));
+
             if (ComboFilter.SelectedIndex > 0)
-                curAgents = curAgents.Where(p => p.AgentTypeID.Equals(ComboFilter.SelectedIndex)).ToList();
-            if (ComboSort.SelectedIndex == 0)
-                curAgents = curAgents.OrderBy(p => p.Title).ToList();
-            if (ComboSort.SelectedIndex == 1)
-                curAgents = curAgents.OrderByDescending(p => p.Title).ToList();
-            if (ComboSort.SelectedIndex == 2)
-                curAgents = curAgents.OrderBy(p => p.Discount).ToList();
-            if (ComboSort.SelectedIndex == 3)
-                curAgents = curAgents.OrderByDescending(p => p.Discount).ToList();
-            if (ComboSort.SelectedIndex == 4)
-                curAgents = curAgents.OrderBy(p => p.Priority).ToList();
-            if (ComboSort.SelectedIndex == 5)
-                curAgents = curAgents.OrderByDescending(p => p.Priority).ToList();
-            LViewAgent.ItemsSource = curAgents.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+                curAgents = curAgents.Where(p => p.Agent.AgentTypeID.Equals(ComboFilter.SelectedIndex)).ToList();
+            switch (ComboSort.SelectedIndex)
+            {
+                case 0:
+                    curAgents = curAgents.OrderBy(p => p.Agent.Title).ToList();
+                    break;
+                case 1:
+                    curAgents = curAgents.OrderByDescending(p => p.Agent.Title).ToList();
+                    break;
+                case 2:
+                    curAgents = curAgents.OrderBy(p => p.Discount).ToList();
+                    break;
+                case 3:
+                    curAgents = curAgents.OrderByDescending(p => p.Discount).ToList();
+                    break;
+                case 4:
+                    curAgents = curAgents.OrderBy(p => p.Agent.Priority).ToList();
+                    break;
+                case 5:
+                    curAgents = curAgents.OrderByDescending(p => p.Agent.Priority).ToList();
+                    break;
+            }
+            if (TBoxSearch.Text != null || TBoxSearch.Text != "")
+                curAgents.Where(p => p.Agent.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+            LViewAgent.ItemsSource = curAgents;
         }
 
         private void ComboSort_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateAgents();
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateAgents();
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e) => UpdateAgents();
-        private void LViewAgent_MouseDoubleClick(object sender, MouseButtonEventArgs e) => Manager.MainFrame.Navigate(new AddEditPage(LViewAgent.SelectedItem as Agent));
+        private void LViewAgent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            AddEditWindow addEditWindow = new AddEditWindow((LViewAgent.SelectedItem as AgentWithDiscount).Agent);
+            addEditWindow.ShowDialog();
+        }
         private void MainFrame_ContentRendered(object sender, EventArgs e) { }
     }
 }

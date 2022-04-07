@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SolntsevShelest
 {
-    class AgentWithDiscount : Agent
+    class AgentWithDiscount
     {
+        public Agent Agent { get; set; }
         public int ProductCount { get; set; }
         public decimal TotalMoney { get; set; }
         public int Discount

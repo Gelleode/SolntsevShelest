@@ -33,7 +33,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Width="100" Stretch="UniformToFill">
                             <Image.Source>
-                                <Binding Path="Logo">
+                                <Binding Path="Agent.Logo">
                                     <Binding.TargetNullValue>
                                         <ImageSource>\agents\picture.png</ImageSource>
                                     </Binding.TargetNullValue>
@@ -42,18 +42,18 @@
                         </Image>
                         <StackPanel Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding AgentType.Title}"/>
+                                <TextBlock Text="{Binding Agent.AgentType.Title}"/>
                                 <TextBlock Text=" | "/>
-                                <TextBlock Text="{Binding Title}"/>
+                                <TextBlock Text="{Binding Agent.Title}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding ProductCount}"/>
                                 <TextBlock Text=" продаж за год"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding Phone}"/>
+                            <TextBlock Text="{Binding Agent.Phone}"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Приоритетность: "/>
-                                <TextBlock Text="{Binding Priority}"/>
+                                <TextBlock Text="{Binding Agent.Priority}"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal">

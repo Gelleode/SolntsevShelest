@@ -10,18 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SolntsevShelest
 {
     /// <summary>
-    /// Логика взаимодействия для AddEditPage.xaml
+    /// Логика взаимодействия для AddEditWindow.xaml
     /// </summary>
-    public partial class AddEditPage : Page
+    public partial class AddEditWindow : Window
     {
         private Agent _currentAgent = new Agent();
-        public AddEditPage(Agent agent)
+        public AddEditWindow(Agent agent)
         {
             if (agent != null)
                 _currentAgent = agent;
