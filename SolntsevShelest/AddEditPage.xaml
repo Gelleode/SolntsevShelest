@@ -9,6 +9,14 @@
       Title="AddEditPage">
 
     <Grid>
-        
+        <StackPanel>
+            <TextBox Text="{Binding Title}"/>
+            <TextBox Text="{Binding Priority}"/>
+            <TextBox Text="{Binding INN}"/>
+            <TextBox Text="{Binding KPP}"/>
+            <TextBox Text="{Binding DirectorName}"/>
+            <TextBox Text="{Binding Phone}"/>
+            <TextBox Text="{Binding Email}"/>
+        </StackPanel>
     </Grid>
 </Page>

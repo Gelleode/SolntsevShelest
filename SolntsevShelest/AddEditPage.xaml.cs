@@ -20,9 +20,12 @@ namespace SolntsevShelest
     /// </summary>
     public partial class AddEditPage : Page
     {
-        public AddEditPage(int agentID)
+        private Agent _currentAgent = new Agent();
+        public AddEditPage(Agent agent)
         {
-            var arbuz = agentID;
+            if (agent != null)
+                _currentAgent = agent;
+            DataContext = _currentAgent;
             InitializeComponent();
         }
     }

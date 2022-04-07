@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace SolntsevShelest
 {
-    class Discount
+    class AgentWithDiscount : Agent
     {
-        public int agentId { get; set; }
-        public int productAmount { get; set; }
-        public decimal totalMoney { get; set; }
-        public int discount
+        public int ProductCount { get; set; }
+        public decimal TotalMoney { get; set; }
+        public int Discount
         {
             get
             {
-                if (totalMoney == 0)
+                if (TotalMoney == 0)
                     return 0;
-                if (totalMoney >= 0 && totalMoney < 10000)
+                if (TotalMoney >= 0 && TotalMoney < 10000)
                     return 5;
-                if (totalMoney >= 10000 && totalMoney < 50000)
+                if (TotalMoney >= 10000 && TotalMoney < 50000)
                     return 10;
-                if (totalMoney >= 50000 && totalMoney < 150000)
+                if (TotalMoney >= 50000 && TotalMoney < 150000)
                     return 20;
                 return 25;
             }

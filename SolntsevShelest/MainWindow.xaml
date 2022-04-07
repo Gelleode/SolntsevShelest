@@ -46,7 +46,10 @@
                                 <TextBlock Text=" | "/>
                                 <TextBlock Text="{Binding Title}"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding ProductCount}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ProductCount}"/>
+                                <TextBlock Text=" продаж за год"/>
+                            </StackPanel>
                             <TextBlock Text="{Binding Phone}"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Приоритетность: "/>
